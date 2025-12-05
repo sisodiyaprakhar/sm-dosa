@@ -56,6 +56,8 @@
       </div>
       <div class="controls">
         <input id="fileInput" type="file" accept="application/json" style="display:none" />
+        <button id="pasteJson" class="btn ghost">Paste JSON</button>
+        <label for="fileInput" class="btn ghost" style="cursor:pointer">Upload JSON</label>
         <button id="loadSample" class="btn">Load Sample</button>
       </div>
     </div>
@@ -65,7 +67,9 @@
     <div class="main">
       <div class="left">
         <div class="resto" id="restoName">S.M DOSA</div>
-        <div class="muted" id="restoDesc"></div>
+        <div class="muted" id="restoDesc">Click categories above to view items. Generate a QR after you host the page publicly.</div>
+        <input id="search" class="search" placeholder="Search items (press Enter)..." />
+        <div class="hint">Tip: Use Upload/Paste to load your own JSON file structure (see examples earlier).</div>
 
         <div style="margin-top:12px">
           <div class="muted" style="font-size:13px">Generate QR for a public URL (recommended):</div>
@@ -290,4 +294,3 @@ downloadQrBtn.addEventListener('click', ()=>{
 </script>
 </body>
 </html>
-
