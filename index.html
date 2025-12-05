@@ -3,293 +3,241 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>S.M DOSA — Menu (responsive + QR)</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@300;400;600&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+<title>S.M DOSA — Order Menu</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Merriweather:wght@300;400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#061224; --card:#071426; --muted:#9aa4b2; --accent:#ff7a59; --glass:rgba(255,255,255,0.02);
+    --bg:#061224; --card:#071426; --muted:#9aa4b2; --accent:#ff7a59; --accent-2:#ff9b7f;
     --radius:12px;
   }
   *{box-sizing:border-box}
-  body{margin:0;font-family:Inter,system-ui,Arial;background:linear-gradient(180deg,#03111a,#071426);color:#eaf6ff;padding:18px}
-  .container{max-width:1100px;margin:0 auto}
-  .top{display:flex;justify-content:space-between;align-items:center;gap:12px}
-  .title{font-family:Poppins;font-size:20px;margin:0}
-  .subtitle{color:var(--muted);font-size:13px;margin:2px 0 0}
-  .controls{display:flex;gap:8px;align-items:center}
-  .btn{background:linear-gradient(90deg,var(--accent),#ff9b7f);border:0;color:#fff;padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:600}
-  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
-  .tabs-wrap{margin-top:14px;overflow-x:auto;padding-bottom:8px}
-  .tabs{display:flex;gap:8px}
-  .tab{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;background:var(--glass);cursor:pointer;border:1px solid rgba(255,255,255,0.02)}
-  .tab.active{background:linear-gradient(90deg,#0d2f36,#123d44);box-shadow:0 8px 30px rgba(0,0,0,0.6)}
-  .tname{font-family:Poppins;font-weight:600;color:#eaf6ff}
-  .main{display:flex;gap:16px;margin-top:16px}
-  .left{width:320px;min-width:200px;padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
-  .resto{font-family:Poppins;font-size:18px;margin:0}
-  .muted{color:var(--muted);font-size:13px}
-  .search{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit;margin-top:10px}
-  .items-area{flex:1;position:relative;overflow:hidden;border-radius:12px;padding:14px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005))}
-  .items-stage{display:flex;transition:transform .48s cubic-bezier(.2,.9,.25,1);gap:12px}
-  .column{min-width:100%;padding-right:6px}
-  .item{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.008));margin-bottom:12px;border:1px solid rgba(255,255,255,0.02);transition:transform .18s}
-  .item:hover{transform:translateY(-6px)}
-  .iname{font-family:Merriweather, serif;font-size:17px;margin:0;color:#f7fbff}
-  .idesc{color:var(--muted);font-size:13px;margin:6px 0 0}
-  .price{font-family:Poppins;font-weight:700;font-size:15px;color:#fff}
-  .badge{display:inline-block;background:rgba(255,255,255,0.02);padding:6px 8px;border-radius:8px;font-size:13px;color:var(--muted);border:1px solid rgba(255,255,255,0.02)}
-  .qr-row{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
-  .qr-input{flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
-  .qr-canvas{width:128px;height:128px;border-radius:8px;background:#fff;padding:8px;display:flex;align-items:center;justify-content:center}
-  #qrCanvas img{max-width:100%;max-height:100%}
-  @media (max-width:900px){ .main{flex-direction:column} .left{width:100%} .items-area{min-height:420px} .qr-canvas{width:96px;height:96px} }
-  /* small helper */
-  .hint{color:var(--muted);font-size:13px;margin-top:8px}
+  body{margin:0;font-family:Inter,system-ui,Arial;background:linear-gradient(180deg,#03111a,#071426);color:#eef8ff;padding:14px}
+  .wrap{max-width:1100px;margin:0 auto}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .brand{font-family:Poppins;font-weight:700;font-size:20px}
+  .subtitle{color:var(--muted);font-size:13px}
+  /* tabs */
+  .tabs{display:flex;gap:8px;margin:14px 0;overflow:auto;padding-bottom:8px}
+  .tab{flex:0 0 auto;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,0.02);cursor:pointer;border:1px solid rgba(255,255,255,0.02)}
+  .tab.active{background:linear-gradient(90deg,#0d2f36,#123d44);box-shadow:0 8px 20px rgba(0,0,0,0.5)}
+  .tab .t{font-family:Poppins;font-weight:600}
+  /* layout */
+  .main{display:flex;gap:18px}
+  .menu{flex:1;min-width:0}
+  .cart{width:340px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.006));padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)}
+  .category-title{font-family:Poppins;font-size:18px;margin:6px 0 12px}
+  .item{display:flex;justify-content:space-between;align-items:flex-start;padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.004));margin-bottom:12px;border:1px solid rgba(255,255,255,0.02)}
+  .iname{font-family:Merriweather,serif;font-size:16px;margin:0}
+  .idesc{color:var(--muted);font-size:13px;margin-top:6px}
+  .price{font-family:Poppins;font-weight:700}
+  .add-btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:0;color:white;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:600}
+  /* cart */
+  .cart h3{margin:6px 0 12px;font-family:Poppins}
+  .cart-list{max-height:420px;overflow:auto}
+  .cart-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,0.02)}
+  .qty{display:flex;gap:6px;align-items:center}
+  .qty button{background:transparent;border:1px solid rgba(255,255,255,0.06);color:inherit;padding:4px 8px;border-radius:6px;cursor:pointer}
+  .total{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-weight:700;font-family:Poppins}
+  .checkout{width:100%;margin-top:12px;padding:10px;border-radius:8px;border:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;font-weight:700;cursor:pointer}
+  .empty{color:var(--muted);font-size:14px;padding:18px;text-align:center}
+  @media (max-width:900px){
+    .main{flex-direction:column}
+    .cart{width:100%}
+  }
 </style>
 </head>
 <body>
-  <div class="container">
-    <div class="top">
+  <div class="wrap">
+    <header>
       <div>
-        <h1 class="title" id="uiTitle">S.M DOSA</h1>
-        <div class="subtitle" id="uiSub">Mobile-friendly menu — shareable via QR</div>
+        <div class="brand">S.M DOSA</div>
+        <div class="subtitle">Crispy dosas • Fresh shakes • Quick orders</div>
       </div>
-      <div class="controls">
-        <input id="fileInput" type="file" accept="application/json" style="display:none" />
-        <button id="pasteJson" class="btn ghost">Paste JSON</button>
-        <label for="fileInput" class="btn ghost" style="cursor:pointer">Upload JSON</label>
-        <button id="loadSample" class="btn">Load Sample</button>
+      <div class="subtitle" id="tableHint">Order online — your cart saves locally</div>
+    </header>
+
+    <div class="tabs" id="tabs"></div>
+
+    <div class="main" style="margin-top:8px">
+      <div class="menu">
+        <div id="itemsStage"></div>
       </div>
-    </div>
 
-    <div class="tabs-wrap"><div class="tabs" id="tabs"></div></div>
-
-    <div class="main">
-      <div class="left">
-        <div class="resto" id="restoName">S.M DOSA</div>
-        <div class="muted" id="restoDesc">Click categories above to view items. Generate a QR after you host the page publicly.</div>
-        <input id="search" class="search" placeholder="Search items (press Enter)..." />
-        <div class="hint">Tip: Use Upload/Paste to load your own JSON file structure (see examples earlier).</div>
-
-        <div style="margin-top:12px">
-          <div class="muted" style="font-size:13px">Generate QR for a public URL (recommended):</div>
-          <div class="qr-row">
-            <input id="qrUrl" class="qr-input" placeholder="Paste hosted menu URL (https://...)" />
-            <button id="genQr" class="btn">Generate QR</button>
-          </div>
-          <div style="margin-top:10px;display:flex;gap:12px;align-items:center">
-            <div class="qr-canvas" id="qrCanvas"><img id="qrImg" alt="QR" style="display:none" /></div>
-            <div>
-              <div class="muted" style="font-size:13px">Scan with phone camera or Google Lens</div>
-              <button id="downloadQr" class="btn ghost" style="margin-top:8px">Download QR</button>
-            </div>
-          </div>
+      <aside class="cart" id="cartBox">
+        <h3>Your Order</h3>
+        <div class="cart-list" id="cartList">
+          <div class="empty">Cart is empty — add items to order</div>
         </div>
-      </div>
-
-      <div class="items-area" id="itemsArea">
-        <div class="items-stage" id="itemsStage"></div>
-      </div>
+        <div class="total" id="totalRow" style="display:none">
+          <div>Total</div>
+          <div id="totalAmt">₹0</div>
+        </div>
+        <button id="checkoutBtn" class="checkout" style="display:none">Checkout</button>
+      </aside>
     </div>
   </div>
 
-<!-- QR library (client-side) -->
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
-
 <script>
-/* ---------- Default MENU (your uploaded S.M DOSA JSON inlined) ---------- */
-let MENU = {
+/* ---------- Public menu (edit if needed) ---------- */
+const MENU = {
   "restaurant": "S.M DOSA",
   "categories": [
-    {"id":"c1","name":"Main Course","items":[{"id":"m1","name":"IDLI (2 pcs.)","price":"40","desc":""},{"id":"m2","name":"Masala Dosa","price":"80","desc":""},{"id":"m3","name":"Plain Dosa","price":"60","desc":""},{"id":"m4","name":"Paneer Masala Dosa","price":"80","desc":""}]},
-    {"id":"c2","name":"Shakes","items":[{"id":"s1","name":"Choclate shake","price":"80","desc":""},{"id":"s2","name":"mango shake","price":"60","desc":""},{"id":"s3","name":"kitkat shake","price":"80","desc":""},{"id":"s4","name":"Kiwi shake","price":"90","desc":""}]},
-    {"id":"c3","name":"dessert","items":[{"id":"d1","name":"butter scotch ice cream","price":"40","desc":""},{"id":"d2","name":"american nuts","price":"40","desc":""},{"id":"d3","name":"choco chips","price":"40","desc":""}]}
+    {"name":"Main Course","items":[
+      {"name":"IDLI (2 pcs.)","price":40,"desc":"Soft steamed idli — light and fluffy"},
+      {"name":"Masala Dosa","price":80,"desc":"Crispy dosa filled with spiced potato"},
+      {"name":"Plain Dosa","price":60,"desc":"Classic golden dosa"},
+      {"name":"Paneer Masala Dosa","price":80,"desc":"Dosa with spicy paneer filling"}
+    ]},
+    {"name":"Shakes","items":[
+      {"name":"Chocolate Shake","price":80,"desc":"Creamy chocolate shake topped with cream"},
+      {"name":"Mango Shake","price":60,"desc":"Fresh mango blended with milk"},
+      {"name":"KitKat Shake","price":80,"desc":"KitKat pieces with thick shake"},
+      {"name":"Kiwi Shake","price":90,"desc":"Refreshing kiwi & milk"}
+    ]},
+    {"name":"Dessert","items":[
+      {"name":"Butterscotch Ice Cream","price":40,"desc":"Rich butterscotch flavour"},
+      {"name":"American Nuts","price":40,"desc":"Crunchy nutty treat"},
+      {"name":"Choco Chips","price":40,"desc":"Chocolate chip delight"}
+    ]}
   ]
 };
-/* --------------------------------------------------------------------- */
+/* ----------------------------------------------------------------- */
 
 const tabsEl = document.getElementById('tabs');
 const itemsStage = document.getElementById('itemsStage');
-const restoName = document.getElementById('restoName');
-const uiTitle = document.getElementById('uiTitle');
-const searchInput = document.getElementById('search');
-const fileInput = document.getElementById('fileInput');
-const pasteBtn = document.getElementById('pasteJson');
-const loadSampleBtn = document.getElementById('loadSample');
-
-const qrUrlInput = document.getElementById('qrUrl');
-const genQrBtn = document.getElementById('genQr');
-const qrImg = document.getElementById('qrImg');
-const qrCanvas = document.getElementById('qrCanvas');
-const downloadQrBtn = document.getElementById('downloadQr');
+const cartList = document.getElementById('cartList');
+const totalRow = document.getElementById('totalRow');
+const totalAmt = document.getElementById('totalAmt');
+const checkoutBtn = document.getElementById('checkoutBtn');
 
 let activeIndex = 0;
-let filtered = null;
+let cart = {}; // { key: {name, price, qty} }
 
-// emoji defaults
-const emojiMap = {'shakes':'🥤','dessert':'🍰','desserts':'🍰','main':'🍛','main course':'🍛','dosa':'🥞'};
-
-function chooseEmoji(name){
+// helpers
+function titleCase(s){ return (s||'').split(' ').map(w=> w? w[0].toUpperCase()+w.slice(1).toLowerCase(): '').join(' '); }
+function emojiFor(name){
   const k = (name||'').toLowerCase();
-  for(const key in emojiMap) if(k.includes(key)) return emojiMap[key];
-  const pool = ['🍽️','🍛','🍰','🥤','🍟','🌮','🥗','🍔','🍕','☕'];
-  return pool[Math.abs(hashCode(name)) % pool.length];
-}
-function hashCode(s){ let h=0; for(let i=0;i<s.length;i++){h=(h<<5)-h + s.charCodeAt(i); h|=0;} return h; }
-function titleCase(s){ if(!s) return ''; return s.split(' ').map(w=> w? w[0].toUpperCase()+w.slice(1).toLowerCase(): '').join(' '); }
-function fancyName(n){
-  const lower = (n||'').toLowerCase();
-  let e = '';
-  if(lower.includes('shake')) e = ' 🥤';
-  else if(lower.includes('dosa')) e = ' 🥞';
-  else if(lower.includes('ice')||lower.includes('choco')) e = ' 🍨';
-  return titleCase(n) + e;
+  if(k.includes('shake')) return '🥤';
+  if(k.includes('dosa')) return '🥞';
+  if(k.includes('dessert')||k.includes('ice')) return '🍨';
+  return '🍽️';
 }
 
-// Render tabs from MENU
+// render tabs
 function renderTabs(){
   tabsEl.innerHTML = '';
   MENU.categories.forEach((cat, idx) => {
-    const tab = document.createElement('div'); tab.className='tab'; if(idx===activeIndex) tab.classList.add('active');
-    const emoji = document.createElement('div'); emoji.className='emoji'; emoji.textContent = cat.emoji || chooseEmoji(cat.name);
-    const tname = document.createElement('div'); tname.className='tname'; tname.textContent = titleCase(cat.name);
-    tab.appendChild(emoji); tab.appendChild(tname);
-    tab.onclick = ()=> { activeIndex = idx; filtered = null; renderStage(); renderTabs(); };
+    const tab = document.createElement('div'); tab.className='tab';
+    if(idx===activeIndex) tab.classList.add('active');
+    tab.innerHTML = `<div class="t">${emojiFor(cat.name)} ${titleCase(cat.name)}</div>`;
+    tab.onclick = ()=>{ activeIndex=idx; renderStage(); renderTabs(); window.scrollTo({top:120,behavior:'smooth'}); };
     tabsEl.appendChild(tab);
   });
 }
 
-// Render items stage (one column per category, move with transform)
+// render category items
 function renderStage(){
   itemsStage.innerHTML = '';
   MENU.categories.forEach((cat, idx)=>{
-    const col = document.createElement('div'); col.className='column';
-    const header = document.createElement('div'); header.style.display='flex'; header.style.justifyContent='space-between'; header.style.alignItems='center'; header.style.marginBottom='10px';
-    const left = document.createElement('div'); left.style.display='flex'; left.style.flexDirection='column';
-    const ct = document.createElement('div'); ct.style.fontFamily='Poppins'; ct.style.fontSize='18px'; ct.style.fontWeight='700'; ct.textContent = (cat.emoji || chooseEmoji(cat.name)) + '  ' + titleCase(cat.name);
-    const cnt = document.createElement('div'); cnt.className='badge'; cnt.textContent = (cat.items||[]).length + ' items';
-    left.appendChild(ct);
-    header.appendChild(left); header.appendChild(cnt);
-    col.appendChild(header);
+    const section = document.createElement('section');
+    section.style.minHeight = '10px';
+    const heading = document.createElement('div'); heading.className='category-title'; heading.textContent = `${emojiFor(cat.name)}  ${titleCase(cat.name)} `;
+    section.appendChild(heading);
 
     const list = document.createElement('div');
-    const items = (filtered && filtered.categoryIndex===idx) ? filtered.items : (cat.items || []);
-    if(!items || items.length===0){
-      const empty = document.createElement('div'); empty.className='muted'; empty.textContent = 'No items in this category.';
-      list.appendChild(empty);
-    } else {
-      items.forEach(it=>{
-        const card = document.createElement('div'); card.className='item';
-        const lefti = document.createElement('div'); lefti.style.flex='1';
-        const iname = document.createElement('div'); iname.className='iname'; iname.innerHTML = fancyName(it.name || '');
-        const idesc = document.createElement('div'); idesc.className='idesc'; idesc.textContent = it.desc || '';
-        lefti.appendChild(iname); lefti.appendChild(idesc);
-        const right = document.createElement('div'); right.style.textAlign='right';
-        const price = document.createElement('div'); price.className='price'; price.textContent = '₹' + (it.price || '—');
-        right.appendChild(price);
-        card.appendChild(lefti); card.appendChild(right);
-        list.appendChild(card);
-      });
-    }
-    col.appendChild(list);
-    itemsStage.appendChild(col);
-  });
+    (cat.items || []).forEach(it=>{
+      const card = document.createElement('div'); card.className='item';
+      const left = document.createElement('div'); left.style.flex='1';
+      const name = document.createElement('div'); name.className='iname'; name.textContent = it.name;
+      const desc = document.createElement('div'); desc.className='idesc'; desc.textContent = it.desc || '';
+      left.appendChild(name); left.appendChild(desc);
+      const right = document.createElement('div'); right.style.textAlign='right';
+      const price = document.createElement('div'); price.className='price'; price.textContent = '₹' + it.price;
+      const btn = document.createElement('div'); btn.style.marginTop='8px';
+      const add = document.createElement('button'); add.className='add-btn'; add.textContent='Add';
+      add.onclick = ()=> addToCart(it);
+      btn.appendChild(add);
+      right.appendChild(price); right.appendChild(btn);
+      card.appendChild(left); card.appendChild(right);
+      list.appendChild(card);
+    });
 
-  const translateX = -(activeIndex * 100);
-  itemsStage.style.transform = 'translateX(' + translateX + '%)';
-  // update header title
-  restoName.textContent = MENU.restaurant || uiTitle.textContent;
-  uiTitle.textContent = MENU.restaurant || uiTitle.textContent;
-  // update tabs active state
-  Array.from(tabsEl.children).forEach((t,i)=> t.classList.toggle('active', i===activeIndex));
+    section.appendChild(list);
+    // only show active category by sliding (keep others hidden)
+    if(idx !== activeIndex) section.style.display = 'none';
+    itemsStage.appendChild(section);
+  });
 }
 
-// Search functionality
-searchInput.addEventListener('keydown', e=>{
-  if(e.key === 'Enter'){
-    const q = searchInput.value.trim().toLowerCase();
-    if(!q){ filtered=null; renderStage(); return; }
-    // find matches
-    let first = null;
-    for(let i=0;i<MENU.categories.length;i++){
-      const cat = MENU.categories[i];
-      const matched = (cat.items||[]).filter(it => (it.name + ' ' + (it.desc||'')).toLowerCase().includes(q));
-      if(matched.length>0){
-        first = {categoryIndex:i, items: matched};
-        break;
-      }
-    }
-    if(!first){ alert('No items found: ' + q); return; }
-    filtered = first; activeIndex = first.categoryIndex; renderTabs(); renderStage();
+// cart functions
+function addToCart(item){
+  const key = item.name;
+  if(!cart[key]) cart[key] = { name: item.name, price: Number(item.price), qty: 0 };
+  cart[key].qty += 1;
+  saveCart(); renderCart();
+}
+function changeQty(key, delta){
+  if(!cart[key]) return;
+  cart[key].qty += delta;
+  if(cart[key].qty <= 0) delete cart[key];
+  saveCart(); renderCart();
+}
+function renderCart(){
+  cartList.innerHTML = '';
+  const keys = Object.keys(cart);
+  if(keys.length === 0){
+    cartList.innerHTML = '<div class="empty">Cart is empty — add items to order</div>';
+    totalRow.style.display = 'none'; checkoutBtn.style.display = 'none';
+    return;
   }
-});
-
-// Load sample (works)
-loadSampleBtn.addEventListener('click', ()=>{
-  filtered = null; activeIndex = 0;
-  // MENU is already the sample inlined; just render
-  renderTabs(); renderStage();
-  // scroll tabs into view for small screens
-  tabsEl.children && tabsEl.children[0] && tabsEl.children[0].scrollIntoView({behavior:'smooth', block:'nearest', inline:'start'});
-});
-
-// Upload JSON file
-fileInput.addEventListener('change', (ev)=>{
-  const f = ev.target.files && ev.target.files[0];
-  if(!f) return;
-  const reader = new FileReader();
-  reader.onload = (e)=>{
-    try {
-      const j = JSON.parse(e.target.result);
-      MENU = j;
-      filtered=null; activeIndex=0; renderTabs(); renderStage();
-      alert('Menu loaded: ' + (MENU.restaurant||''));
-    } catch(err){ alert('Invalid JSON file'); console.error(err); }
-  };
-  reader.readAsText(f);
-});
-
-// Paste JSON (simple prompt)
-pasteBtn.addEventListener('click', ()=>{
-  const txt = prompt('Paste menu JSON here (full object with restaurant & categories):');
-  if(!txt) return;
-  try {
-    const j = JSON.parse(txt);
-    MENU = j;
-    filtered=null; activeIndex=0; renderTabs(); renderStage();
-    alert('Menu loaded: ' + (MENU.restaurant||''));
-  } catch(err){ alert('Invalid JSON'); console.error(err); }
-});
-
-// Export JSON
-document.getElementById('exportJson')?.addEventListener('click', ()=>{
-  const data = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(MENU, null, 2));
-  const a = document.createElement('a'); a.href = data; a.download = (MENU.restaurant||'menu') + '.json'; document.body.appendChild(a); a.click(); a.remove();
-});
-
-// QR generation using qrcode lib
-genQrBtn.addEventListener('click', ()=>{
-  const url = (qrUrlInput.value||'').trim();
-  if(!url){ alert('Paste the public URL of your hosted menu (GitHub Pages or other).'); return; }
-  // create data URL
-  QRCode.toDataURL(url, {width:512, margin:1}, function (err, dataUrl) {
-    if(err){ alert('QR generation failed'); console.error(err); return; }
-    qrImg.src = dataUrl; qrImg.style.display = 'block';
+  let total = 0;
+  keys.forEach(k=>{
+    const r = cart[k];
+    total += r.price * r.qty;
+    const row = document.createElement('div'); row.className='cart-row';
+    row.innerHTML = `<div style="flex:1"><div style="font-weight:600">${r.name}</div><div class="muted" style="font-size:13px">₹${r.price} × ${r.qty}</div></div>`;
+    const controls = document.createElement('div'); controls.className='qty';
+    const dec = document.createElement('button'); dec.textContent='−'; dec.onclick = ()=> changeQty(k, -1);
+    const num = document.createElement('div'); num.style.padding='4px 8px'; num.textContent = r.qty;
+    const inc = document.createElement('button'); inc.textContent='+'; inc.onclick = ()=> changeQty(k, +1);
+    controls.appendChild(dec); controls.appendChild(num); controls.appendChild(inc);
+    row.appendChild(controls);
+    cartList.appendChild(row);
   });
+  totalRow.style.display = 'flex'; checkoutBtn.style.display = 'block';
+  totalAmt.textContent = '₹' + total;
+}
+
+// persist cart locally
+function saveCart(){ try{ localStorage.setItem('smdosa_cart', JSON.stringify(cart)); } catch(e){} }
+function loadCart(){ try{ const s = localStorage.getItem('smdosa_cart'); if(s) cart = JSON.parse(s); } catch(e){ cart = {}; } }
+
+// checkout placeholder
+checkoutBtn.addEventListener('click', ()=>{
+  const keys = Object.keys(cart);
+  if(keys.length === 0) return alert('Cart is empty');
+  // For now we just show a summary — you can integrate payment / order API later
+  let summary = 'Your order:\n\n';
+  let total = 0;
+  keys.forEach(k => { const r = cart[k]; summary += `${r.qty} x ${r.name} — ₹${r.price * r.qty}\n`; total += r.price * r.qty; });
+  summary += `\nTotal: ₹${total}\n\nThank you! (This is a demo checkout)`;
+  alert(summary);
+  // clear cart after checkout demo
+  cart = {}; saveCart(); renderCart();
 });
 
-// Download QR (image)
-downloadQrBtn.addEventListener('click', ()=>{
-  if(!qrImg.src) { alert('Please generate QR first.'); return; }
-  const a = document.createElement('a'); a.href = qrImg.src; a.download = (MENU.restaurant||'menu') + '-qr.png'; document.body.appendChild(a); a.click(); a.remove();
+// keyboard left/right to switch categories
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'ArrowRight'){ activeIndex = Math.min(activeIndex + 1, MENU.categories.length - 1); renderStage(); renderTabs(); }
+  if(e.key === 'ArrowLeft'){ activeIndex = Math.max(activeIndex - 1, 0); renderStage(); renderTabs(); }
 });
 
-// Init render
+// init
 (function init(){
-  // ensure emojis exist for categories
-  MENU.categories.forEach(c => { if(!c.emoji) c.emoji = chooseEmoji(c.name || ''); });
+  loadCart();
   renderTabs();
   renderStage();
+  renderCart();
 })();
 </script>
 </body>
